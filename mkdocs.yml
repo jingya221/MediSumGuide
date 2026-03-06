@@ -13,14 +13,14 @@ theme:
     logo: material/notebook
   palette:
   - scheme: default
-    primary: lightskyblue
-    accent: lightskyblue
+    primary: light blue
+    accent: light blue
     toggle:
       icon: material/brightness-7
       name: 切换至深色模式
   - scheme: slate
-    primary: lightskyblue
-    accent: lightskyblue
+    primary: light blue
+    accent: light blue
     toggle:
       icon: material/brightness-4
       name: 切换至浅色模式
