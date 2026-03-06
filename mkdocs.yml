@@ -1,0 +1,110 @@
+site_name: 临床R语言编程
+site_description: 临床研究中R语言编程的指南和最佳实践
+site_author: Jingya Wang
+site_url: https://jingya221.github.io/SharingNotes/
+repo_name: jingya221/SharingNotes
+repo_url: https://github.com/jingya221/SharingNotes
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 Jingya Wang
+theme:
+  name: material
+  language: zh
+  icon:
+    logo: material/notebook
+  palette:
+  - scheme: default
+    primary: teal
+    accent: teal
+    toggle:
+      icon: material/brightness-7
+      name: 切换至深色模式
+  - scheme: slate
+    primary: teal
+    accent: teal
+    toggle:
+      icon: material/brightness-4
+      name: 切换至浅色模式
+  features:
+  - announce.dismiss
+  - content.action.edit
+  - content.action.view
+  - content.code.annotate
+  - content.code.copy
+  - content.tabs.link
+  - content.tooltips
+  - header.autohide
+  - navigation.expand
+  - navigation.footer
+  - navigation.indexes
+  - navigation.instant
+  - navigation.instant.prefetch
+  - navigation.instant.progress
+  - navigation.prune
+  - navigation.sections
+  - navigation.tabs
+  - navigation.tabs.sticky
+  - navigation.top
+  - navigation.tracking
+  - search.highlight
+  - search.share
+  - search.suggest
+  - toc.follow
+plugins:
+- search:
+    separator: '[\s\u200b\-]'
+- minify:
+    minify_html: true
+extra:
+  social:
+  - icon: fontawesome/brands/github
+    link: https://github.com/jingya221
+  generator: false
+extra_css:
+- stylesheets/extra.css
+markdown_extensions:
+- abbr
+- admonition
+- attr_list
+- def_list
+- footnotes
+- md_in_html
+- tables
+- toc:
+    permalink: true
+    title: 目录导航
+- pymdownx.arithmatex:
+    generic: true
+- pymdownx.betterem:
+    smart_enable: all
+- pymdownx.caret
+- pymdownx.details
+- pymdownx.emoji
+- pymdownx.highlight:
+    anchor_linenums: true
+    line_spans: __span
+    pygments_lang_class: true
+- pymdownx.inlinehilite
+- pymdownx.keys
+- pymdownx.magiclink:
+    repo_url_shorthand: true
+    user: jingya221
+    repo: SharingNotes
+- pymdownx.mark
+- pymdownx.smartsymbols
+- pymdownx.superfences
+- pymdownx.tabbed:
+    alternate_style: true
+- pymdownx.tasklist:
+    custom_checkbox: true
+- pymdownx.tilde
+nav:
+- 首页: index.md
+- 笔记分类:
+  - 01-受试者基线信息:
+    - 人口学和其他基本特征: notes/01-受试者基线信息/02-人口学和其他基本特征.md
+    - 受试者分布: notes/01-受试者基线信息/01-受试者分布.md
+    - 既往抗肿瘤治疗史: notes/01-受试者基线信息/04-既往抗肿瘤治疗史.md
+    - 肿瘤诊断: notes/01-受试者基线信息/03-肿瘤诊断.md
+  - 02-治疗后不良事件:
+    - MedDRA分类汇总: notes/02-治疗后不良事件/02-04MedDRA分类汇总.md
+    - 不良事件概况: notes/02-治疗后不良事件/01-不良事件概况.md
