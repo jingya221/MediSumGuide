@@ -42,5 +42,5 @@
 ---
 
 <p align="center">
-  <small>© 2026 Jingya Wang | <a href="https://github.com/jingya221/SharingNotes">GitHub</a></small>
+  <small>© 2026 Jingya Wang | <a href="https://github.com/jingya221/MediSumGuide">GitHub</a></small>
 </p>

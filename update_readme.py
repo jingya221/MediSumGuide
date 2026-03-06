@@ -253,7 +253,7 @@ def update_index_page(markdown_files):
 ---
 
 <p align="center">
-  <small>© 2026 Jingya Wang | <a href="https://github.com/jingya221/SharingNotes">GitHub</a></small>
+  <small>© 2026 Jingya Wang | <a href="https://github.com/jingya221/MediSumGuide">GitHub</a></small>
 </p>"""
     
     # 写入文件
@@ -294,7 +294,7 @@ def update_readme_from_index():
         # 添加README.md特有的说明
         readme_header = """# 临床R语言编程
 
-> 🌐 **在线浏览**: [https://jingya221.github.io/SharingNotes/](https://jingya221.github.io/SharingNotes/)
+> 🌐 **在线浏览**: [https://jingya221.github.io/MediSumGuide/](https://jingya221.github.io/MediSumGuide/)
 
 临床研究中R语言编程的指南和最佳实践。
 
@@ -309,13 +309,13 @@ def update_readme_from_index():
 ## 🚀 快速开始
 
 ### 在线浏览（推荐）
-访问 [https://jingya221.github.io/SharingNotes/](https://jingya221.github.io/SharingNotes/)
+访问 [https://jingya221.github.io/MediSumGuide/](https://jingya221.github.io/MediSumGuide/)
 
 ### 本地运行
 ```bash
 # 克隆仓库
-git clone https://github.com/jingya221/SharingNotes.git
-cd SharingNotes
+git clone https://github.com/jingya221/MediSumGuide.git
+cd MediSumGuide
 
 # 安装依赖
 pip install mkdocs mkdocs-material mkdocs-minify-plugin
@@ -329,7 +329,7 @@ mkdocs serve
 ## 📁 项目结构
 
 ```
-SharingNotes/
+MediSumGuide/
 ├── docs/
 │   ├── index.md
 │   └── notes/
@@ -344,7 +344,7 @@ SharingNotes/
 *📅 最后更新: {datetime.now().strftime('%Y-%m-%d')}*
 
 <p align="center">
-  © 2026 Jingya Wang | <a href="https://github.com/jingya221/SharingNotes">GitHub</a>
+  © 2026 Jingya Wang | <a href="https://github.com/jingya221/MediSumGuide">GitHub</a>
 </p>
 """
         
