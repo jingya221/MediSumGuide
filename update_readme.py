@@ -35,26 +35,31 @@ def extract_title_from_markdown(file_path):
         return Path(file_path).stem
 
 def extract_description_from_markdown(file_path):
-    """从markdown文件中提取描述（第一段文字）"""
+    """从markdown文件中提取描述（标题后第一段非 HTML 的正文）"""
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
-        
-        # 去掉标题后的第一段非空文字
+
         lines = content.split('\n')
         description = ""
         found_title = False
-        
+
         for line in lines:
             line = line.strip()
             if line.startswith('#'):
                 found_title = True
                 continue
-            if found_title and line and not line.startswith('#') and not line.startswith('```') and not line.startswith('!!!'):
-                # 取前50个字符作为描述，避免代码块
-                description = line[:50] + ("..." if len(line) > 50 else "")
-                break
-        
+            if not found_title or not line:
+                continue
+            if line.startswith('```') or line.startswith('!!!') or line.startswith('<'):
+                continue
+            # 跳过仅包含 HTML 或空白/符号的行，取第一段像正文的句子
+            text = re.sub(r'<[^>]+>', '', line).strip()
+            if len(text) < 3:
+                continue
+            description = text[:50] + ("..." if len(text) > 50 else "")
+            break
+
         return description
     except Exception as e:
         return ""
@@ -199,67 +204,70 @@ def update_mkdocs_nav(markdown_files):
     return True
 
 def update_index_page(markdown_files):
-    """更新docs/index.md首页"""
+    """更新docs/index.md首页（TLG Catalog 风格：指南目录表格 + 使用说明）"""
     index_file = Path('./docs/index.md')
     if not index_file.exists():
         print("docs/index.md文件不存在！")
         return False
-    
-    # 按分类组织文件
+
+    # 按分类组织文件，分类按名称排序（01-xxx, 02-xxx）
     categories = defaultdict(list)
     for file_info in markdown_files:
         categories[file_info['category']].append(file_info)
-    
-    # 生成笔记目录内容
-    notes_content = []
-    # 对分类按名称排序，但根目录排在最前面
-    sorted_categories = sorted(categories.keys(), key=lambda x: (x != "根目录", x))
-    
+    sorted_categories = sorted(categories.keys(), key=lambda x: (x == "根目录", x))
+
+    # 生成「指南目录」下的分类表格
+    tables_content = []
     for category in sorted_categories:
-        notes_content.append(f"### 🗂️ {category}")
-        files = categories[category]
-        if files:
-            for file_info in sorted(files, key=lambda x: x['title']):
-                page_path = file_info['relative_path'].replace('\\', '/').replace('.md', '')
-                description = f"\n{file_info['description']}" if file_info['description'] else ""
-                notes_content.append(f"\n#### [{file_info['title']}](notes/{page_path}){description}\n")
-        else:
-            notes_content.append("*该分类暂无笔记*")
-        notes_content.append("")
-    
-    # 生成统计信息
-    total_files = len(markdown_files)
-    total_categories = len(categories)
-    latest_note = markdown_files[0]['title'] if markdown_files else "无"
-    update_date = datetime.now().strftime('%Y-%m-%d')
-    
-    # 构建新的首页内容
-    new_content = f"""# 临床R语言编程
+        files = sorted(categories[category], key=lambda x: x['title'])
+        if not files:
+            continue
+        section_title = "其他" if category == "根目录" else category
+        tables_content.append(f"### {section_title}")
+        tables_content.append("")
+        tables_content.append("| 表格 | 说明 |")
+        tables_content.append("|------|------|")
+        for file_info in files:
+            page_path = file_info['relative_path'].replace('\\', '/')
+            link_path = f"notes/{page_path}"
+            desc = (file_info['description'] or "").strip()
+            if len(desc) > 50:
+                desc = desc[:47] + "..."
+            tables_content.append(f"| [{file_info['title']}]({link_path}) | {desc or '-'} |")
+        tables_content.append("")
+        tables_content.append("")
+
+    tables_block = "\n".join(tables_content).rstrip()
+
+    # 构建新首页内容（与当前 TLG 风格一致）
+    new_content = f"""# MediSum 平台使用指南
+
+本指南为 **MediSum** 平台的使用说明，按平台支持的表格与输出类型组织。每类表格均有独立页面，说明界面选项、分组与筛选方式及结果展示。
+
+完整目录见下方 **[指南目录](#指南目录)**，或使用左侧导航进入各章节。
 
 ---
 
-## 📚 指南内容
+## 指南目录
 
-{chr(10).join(notes_content).rstrip()}
-
----
-
-## 📊 统计信息
-
-- **指南分类**: {total_categories} 个
-- **文档数量**: {total_files} 篇
-- **最近更新**: {update_date}
+{tables_block}
 
 ---
 
-<p align="center">
-  <small>© 2026 Jingya Wang | <a href="https://github.com/jingya221/MediSumGuide">GitHub</a></small>
-</p>"""
-    
-    # 写入文件
+## 使用说明
+
+- 各页面介绍对应表格在 MediSum 中的配置方式（数据集、语言、分析集、分组变量、呈现变量等）。
+- 界面支持中英文表格展示语言，分组支持计划组别、治疗组别及自定义分组等。
+- 截图与选项名称以实际平台为准，便于按步骤操作。
+
+---
+
+*© 2026 Jingya Wang · [GitHub](https://github.com/jingya221/MediSumGuide)*
+"""
+
     with open(index_file, 'w', encoding='utf-8') as file:
         file.write(new_content)
-    
+
     return True
 
 def update_readme_from_index():
