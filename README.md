@@ -1,8 +1,8 @@
-# 临床R语言编程
+# MediSum 平台使用指南
 
 > 🌐 **在线浏览**: [https://jingya221.github.io/MediSumGuide/](https://jingya221.github.io/MediSumGuide/)
 
-临床研究中R语言编程的指南和最佳实践。
+MediSum使用说明指南，按平台支持的表格与输出类型组织。每类表格均有独立页面，说明界面选项、分组与筛选方式及结果展示。
 
 ---
 
